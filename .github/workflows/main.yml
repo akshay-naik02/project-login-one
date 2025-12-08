@@ -1,6 +1,7 @@
 name: Build WAR File
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
@@ -11,26 +12,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Java 8
       - name: Set up JDK 8
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '8'
 
-      # Step 3: Verify Maven (already preinstalled)
       - name: Check Maven version
         run: mvn -version
 
-      # Step 4: Build WAR
       - name: Build WAR using Maven
         run: mvn clean package
 
-      # Step 5: Upload WAR artifact
       - name: Upload WAR
         uses: actions/upload-artifact@v4
         with:
